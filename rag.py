@@ -1,33 +1,17 @@
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-
-from langchain_community.vectorstores import FAISS
-
-from langchain_core.documents import Document
-
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
-
-
-def create_vectorstore():
+def retrieve_context(query):
 
     with open("office_policy.txt", "r") as f:
         text = f.read()
 
-    docs = [Document(page_content=text)]
+    chunks = text.split("\n")
 
-    splitter = RecursiveCharacterTextSplitter(
-        chunk_size=300,
-        chunk_overlap=50
-    )
+    relevant_chunks = []
 
-    chunks = splitter.split_documents(docs)
+    for chunk in chunks:
 
-    embeddings = GoogleGenerativeAIEmbeddings(
-        model="models/text-embedding-004"
-    )
+        if any(word.lower() in chunk.lower()
+               for word in query.split()):
 
-    vectorstore = FAISS.from_documents(
-        chunks,
-        embeddings
-    )
+            relevant_chunks.append(chunk)
 
-    return vectorstore
+    return "\n".join(relevant_chunks)
