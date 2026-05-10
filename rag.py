@@ -22,7 +22,7 @@ def create_vectorstore():
     chunks = splitter.split_documents(docs)
 
     embeddings = GoogleGenerativeAIEmbeddings(
-        model="models/embedding-001"
+        model="models/text-embedding-004"
     )
 
     vectorstore = FAISS.from_documents(
