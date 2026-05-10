@@ -11,7 +11,7 @@ from rag import retrieve_context
 
 load_dotenv()
 
-# Load Gemini model
+# Configure Gemini client
 
 client = genai.Client(
     api_key=os.getenv("GOOGLE_API_KEY")
@@ -20,6 +20,10 @@ client = genai.Client(
 # Streamlit UI
 
 st.title("Enterprise Smart Assistant")
+
+st.write(
+    "AI-powered workplace assistant for employees and visitors."
+)
 
 query = st.text_input(
     "Ask something about office"
@@ -53,7 +57,7 @@ if query:
         if not found:
             st.warning("Room not found.")
 
-    # RAG SEARCH
+    # POLICY / RAG SEARCH
 
     else:
 
@@ -62,7 +66,7 @@ if query:
         prompt = f"""
         You are an enterprise office assistant.
 
-        Answer professionally.
+        Answer professionally using the provided context.
 
         Context:
         {context}
@@ -71,9 +75,29 @@ if query:
         {query}
         """
 
-        response = client.models.generate_content(
-            model="gemini-2.0-flash",
-            contents=prompt
-        )
+        try:
 
-        st.write(response.text)
+            response = client.models.generate_content(
+                model="gemini-1.5-flash",
+                contents=prompt
+            )
+
+            st.write(response.text)
+
+        except Exception as e:
+
+            st.error(
+                "Gemini API temporarily unavailable."
+            )
+
+            st.write(
+                """
+                Fallback Response:
+
+                - Visitor access requires employee approval.
+                - Meeting rooms can be booked 24 hours in advance.
+                - Restricted floors require admin access.
+                """
+            )
+
+            st.caption(f"Error: {e}")
