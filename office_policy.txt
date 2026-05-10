@@ -1,0 +1,9 @@
+Visitor access requires employee approval.
+
+Meeting rooms can be booked 24 hours in advance.
+
+Restricted floors require admin access.
+
+Transport requests should be submitted 2 hours before departure.
+
+Clients visiting executive floors require security clearance.

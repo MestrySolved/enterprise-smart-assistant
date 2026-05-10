@@ -1,0 +1,17 @@
+[
+  {
+    "room": "A-301",
+    "floor": 3,
+    "wing": "East Wing"
+  },
+  {
+    "room": "B-210",
+    "floor": 2,
+    "wing": "West Wing"
+  },
+  {
+    "room": "C-110",
+    "floor": 1,
+    "wing": "North Wing"
+  }
+]
