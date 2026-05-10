@@ -2,7 +2,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 from langchain_community.vectorstores import FAISS
 
-from langchain.docstore.document import Document
+from langchain_core.documents import Document
 
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 
