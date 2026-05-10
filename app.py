@@ -1,5 +1,5 @@
 import streamlit as st
-import google.generativeai as genai
+from google import genai
 import json
 import os
 
@@ -11,16 +11,10 @@ from rag import retrieve_context
 
 load_dotenv()
 
-# Configure Gemini
-
-genai.configure(
-    api_key=os.getenv("GOOGLE_API_KEY")
-)
-
 # Load Gemini model
 
-model = genai.GenerativeModel(
-    "gemini-1.5-flash"
+client = genai.Client(
+    api_key=os.getenv("GOOGLE_API_KEY")
 )
 
 # Streamlit UI
@@ -77,8 +71,9 @@ if query:
         {query}
         """
 
-        response = model.generate_content(
-            prompt
+        response = client.models.generate_content(
+            model="gemini-2.0-flash",
+            contents=prompt
         )
 
         st.write(response.text)
