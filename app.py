@@ -20,7 +20,7 @@ genai.configure(
 # Load Gemini model
 
 model = genai.GenerativeModel(
-    "gemini-1.5-flash"
+    "gemini-pro"
 )
 
 # Streamlit UI
