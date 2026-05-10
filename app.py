@@ -5,7 +5,7 @@ import os
 
 from dotenv import load_dotenv
 
-from rag import create_vectorstore
+from rag import retrieve_context
 
 # Load environment variables
 
@@ -22,10 +22,6 @@ genai.configure(
 model = genai.GenerativeModel(
     "gemini-1.5-flash"
 )
-
-# Create vector database
-
-vectorstore = create_vectorstore()
 
 # Streamlit UI
 
@@ -67,14 +63,7 @@ if query:
 
     else:
 
-        docs = vectorstore.similarity_search(
-            query,
-            k=2
-        )
-
-        context = "\n".join(
-            [doc.page_content for doc in docs]
-        )
+        context = retrieve_context(query)
 
         prompt = f"""
         You are an enterprise office assistant.
